@@ -1,0 +1,417 @@
+
+<html>
+<head>
+<title>ethandacat</title>
+<style>
+	@import url('https://fonts.googleapis.com/css?family=Space+Grotesk&display=swap');
+    @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+    /* basic style */
+    .downarrow{
+    	display:none;
+    	width:64px;
+        height:64px;
+        position:absolute;
+        bottom:30px;
+        left: calc(50% - 32px);
+    }
+    html, body {
+      position: relative;
+      overflow: hidden;
+    }
+    body {
+    overflow-y:scroll;
+    display:flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family:"Space Grotesk", monospace;
+      font-weight:bold;
+      color:black;
+      background: radial-gradient(circle at center, #323, #101);
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+    }
+    .flex {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+      height: 80px;
+      margin: 0 -80px 0 0;
+    }
+    /* cube */
+    .cube {
+      position: relative;
+      width: 1px;
+      height: 1px;
+      margin: 0 80px 0 0;
+      transform-style: preserve-3d;
+    }
+    .wall {
+      width: 80px;
+      height: 80px;
+      position: absolute;
+      left: calc(-80px / 2);
+      top: calc(-80px / 2);
+      text-align: center;
+      line-height: 100px;
+      border: solid 1px #fff;
+    }
+    .front {
+      transform: translateZ(calc(80px / 2));
+    }
+    .back {
+      transform: translateZ(calc(-80px / 2)) rotateY(180deg);
+    }
+    .right {
+      transform: translateX(calc(80px / 2)) rotateY(90deg);
+    }
+    .left {
+      transform: translateX(calc(-80px / 2)) rotateY(-90deg);
+    }
+    .top {
+      transform: translateY(calc(-80px / 2)) rotateX(90deg);
+    }
+    .bottom {
+      transform: translateY(calc(80px / 2)) rotateX(-90deg);
+    }
+    /* animation */
+    .flex:nth-of-type(4) .cube:nth-of-type(1) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s forwards;
+    }
+    .flex:nth-of-type(3) .cube:nth-of-type(1) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards;
+    }
+    .flex:nth-of-type(4) .cube:nth-of-type(2) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards;
+    }
+    .flex:nth-of-type(2) .cube:nth-of-type(1) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.7s forwards;
+    }
+    .flex:nth-of-type(3) .cube:nth-of-type(2) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.7s forwards;
+    }
+    .flex:nth-of-type(4) .cube:nth-of-type(3) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
+    }
+    .flex:nth-of-type(1) .cube:nth-of-type(1) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
+    }
+    .flex:nth-of-type(2) .cube:nth-of-type(2) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
+    }
+    .flex:nth-of-type(3) .cube:nth-of-type(3) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
+    }
+    .flex:nth-of-type(4) .cube:nth-of-type(4) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s forwards;
+    }
+    .flex:nth-of-type(1) .cube:nth-of-type(2) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.9s forwards;
+    }
+    .flex:nth-of-type(2) .cube:nth-of-type(3) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.9s forwards;
+    }
+    .flex:nth-of-type(3) .cube:nth-of-type(4) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 0.9s forwards;
+    }
+    .flex:nth-of-type(1) .cube:nth-of-type(3) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 1s forwards;
+    }
+    .flex:nth-of-type(2) .cube:nth-of-type(4) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 1s forwards;
+    }
+    .flex:nth-of-type(1) .cube:nth-of-type(4) {
+      animation: rotation 3s cubic-bezier(0.215, 0.61, 0.355, 1) 1.1s forwards;
+    }
+    .objholder{
+    	transform: rotate(270deg);
+        overflow:visible;
+        white-space: nowrap;
+        padding-left:30px;
+        display:flex;
+        z-index:99999;
+    }
+    @keyframes rotation {
+      100% {
+        transform: rotateX(270deg) rotateY(270deg);
+      }
+    }
+    .wall {
+      animation: color 2s linear 1.5s forwards;
+      overflow:visible;
+    }
+    @keyframes color {
+      100% {
+        background-color: #fff;
+      }
+    }
+    @keyframes fadeinout {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+    
+.overlay-text {
+    display: none; /* Start hidden */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: black;
+    z-index: 100000;
+    text-align: center;
+}
+.fade-in {
+animation: fadeinout 2s linear forwards;
+}
+
+.maincontent{
+align-content:center;
+padding:50px;
+text-align:center;
+width:100vw;
+color:white;
+	position:absolute;
+	top:100vh;
+	display:none;
+    font-family:Quicksand, sans-serif;
+    background-color: #010;
+}
+
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="flex">
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+        </div>
+        <div class="flex">
+        
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            
+        </div>
+        <div class="flex">
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+        </div>
+        <div class="flex">
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            <div class="cube">
+                <div class="wall front"></div>
+                <div class="wall back"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="wall top"></div>
+                <div class="wall bottom"></div>
+            </div>
+            
+        </div>
+        <div class="overlay-text">ethan da cat</div>
+    </div>
+<svg class="downarrow" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+    <g id="SVGRepo_iconCarrier">
+        <path clip-rule="evenodd" d="M12 3C12.5523 3 13 3.44772 13 4V17.5858L18.2929 12.2929C18.6834 11.9024 19.3166 11.9024 19.7071 12.2929C20.0976 12.6834 20.0976 13.3166 19.7071 13.7071L12.7071 20.7071C12.3166 21.0976 11.6834 21.0976 11.2929 20.7071L4.29289 13.7071C3.90237 13.3166 3.90237 12.6834 4.29289 12.2929C4.68342 11.9024 5.31658 11.9024 5.70711 12.2929L11 17.5858V4C11 3.44772 11.4477 3 12 3Z" fill="white"></path>
+    </g>
+</svg>
+</body>
+<!-- MAIN CONTENT -->
+<style>
+.wormhole{
+	width:20vw;
+    height:20vw;
+    background: radial-gradient(circle at center, #eee, #000);
+    margin: 0 auto;
+    border-radius: 10vw;
+}
+@keyframes wormhole {
+	0% {
+    	background-color:white;
+    	width:20vw;
+        height:20vw;
+    }
+    100% {
+    	background-color:white;
+    	width:100vw;
+        height:900vh;
+    }
+}
+.wormhole:hover {
+	background-color:white;
+  animation: 3s wormhole;
+}
+.contenthole{
+display:none;
+	background-color:white;
+    color:black;
+}
+</style>
+<div class="maincontent">
+<h1>Hello, I'm Ethan.</h1>
+<h1>I program as a hobby.</h1>
+<h1>Along the way, I learned HTML, CSS, and JS,</h1>
+<h1>which I used to build this website.</h1>
+<h1>Let's go down the wormhole of projects I've done. Hover on the wormhole.</h1>
+<div class="wormhole" onmouseover="callDun()"></div>
+<div class="contenthole">
+<br>
+<h1>Welcome to the wormhole!</h1>
+<h1>My projects have been:</h1>
+<ul>
+<li>This site
+<li>catscobot
+<li>Some games
+</ul>
+</div>
+
+<h1>Social:</h1>
+
+</div>
+
+
+<script>
+function callDun() {
+	const contenthole = document.querySelector(".contenthole")
+    contenthole.style.display = "block";
+    setTimeout(() => {
+    	const wormhole = document.querySelector(".wormhole");
+        wormhole.style.display = "none";
+    }, 3000)
+}
+
+// Assuming your animation ends here
+const overlayText = document.querySelector('.overlay-text');
+const downArrow = document.querySelector('.downarrow');
+const relaxt = document.querySelector(".maincontent");
+
+// After the animation is done
+setTimeout(() => {
+    overlayText.style.display = 'block'; // Show the text
+    overlayText.classList.add('fade-in');
+    downArrow.style.display = "block";
+    downArrow.classList.add('fade-in');
+    relaxt.style.display = "block"
+    
+}, 1700); // Set the delay to match your animation duration
+
+</script>
+</html>
