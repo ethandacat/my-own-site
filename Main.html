@@ -384,6 +384,33 @@ display:none;
 </div>
 
 <h1>Social:</h1>
+<div id="profile" style="width: 320px; padding: 15px; border: 1px solid #444; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); text-align: center; background: #222; color: #fff; font-family: Arial, sans-serif;">
+    <h2 style="margin: 0; font-size: 1.5em;">${d.login}</h2>
+    <img src="${d.avatar_url}" width="80" style="border-radius: 50%; margin: 10px 0;">
+    <p style="font-size: 0.9em; margin: 5px 0;">${d.bio || "No bio available"}</p>
+    <div style="font-size: 0.9em;">
+        <p><strong>Followers:</strong> ${d.followers}</p>
+        <p><strong>Following:</strong> ${d.following}</p>
+        <p><strong>Repos:</strong> ${d.public_repos}</p>
+    </div>
+    <a href="${d.html_url}" target="_blank" style="text-decoration: none; color: #1e90ff; font-weight: bold;">View Profile</a>
+</div>
+
+<script>
+fetch('https://api.github.com/users/ethandacat')
+    .then(r => r.json())
+    .then(d => document.getElementById('profile').innerHTML = `
+        <h2 style="margin: 0; font-size: 1.5em;">${d.login}</h2>
+        <img src="${d.avatar_url}" width="80" style="border-radius: 50%; margin: 10px 0;">
+        <p style="font-size: 0.9em; margin: 5px 0;">${d.bio || "No bio available"}</p>
+        <div style="font-size: 0.9em;">
+            <p><strong>Followers:</strong> ${d.followers}</p>
+            <p><strong>Following:</strong> ${d.following}</p>
+            <p><strong>Repos:</strong> ${d.public_repos}</p>
+        </div>
+        <a href="${d.html_url}" target="_blank" style="text-decoration: none; color: #1e90ff; font-weight: bold;">View Profile</a>
+    `);
+</script>
 
 </div>
 
